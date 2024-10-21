@@ -326,7 +326,7 @@ bool Gps::configGnss(CfgGNSS gnss,
     return false;
   // Cold reset the GNSS
   ROS_WARN("GNSS re-configured, cold resetting device.");
-  if (!configReset(CfgRST::NAV_BBR_COLD_START, CfgRST::RESET_MODE_GNSS))
+  if (!configReset(CfgRST::NAV_BBR_WARM_START, CfgRST::RESET_MODE_GNSS))
     return false;
   ros::Duration(1.0).sleep();
   // Reset the I/O

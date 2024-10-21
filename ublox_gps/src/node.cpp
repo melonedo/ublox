@@ -1741,6 +1741,20 @@ void HpPosRecProduct::subscribe() {
 
   // Whether to publish the Heading info from Nav Relative Position NED
   nh->param("publish/nav/heading", enabled["nav_heading"], enabled["nav"]);
+
+  // Subscribe to SFRBX messages
+  nh->param("publish/rxm/sfrb", enabled["rxm_sfrb"], enabled["rxm"]);
+  if (enabled["rxm_sfrb"])
+    gps.subscribe<ublox_msgs::RxmSFRBX>(
+        boost::bind(publish<ublox_msgs::RxmSFRBX>, _1, "rxmsfrb"),
+        kSubscribeRate);
+
+  // Subscribe to RawX messages
+  nh->param("publish/rxm/raw", enabled["rxm_raw"], enabled["rxm"]);
+  if (enabled["rxm_raw"])
+    gps.subscribe<ublox_msgs::RxmRAWX>(
+        boost::bind(publish<ublox_msgs::RxmRAWX>, _1, "rxmraw"),
+        kSubscribeRate);
 }
 
 void HpPosRecProduct::callbackNavHpPosLlh(const ublox_msgs::NavHPPOSLLH& m) {
