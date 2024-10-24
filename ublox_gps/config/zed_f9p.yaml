@@ -1,5 +1,23 @@
-device: /dev/ttyACM0
+device: $(env F9P_DEVICE)
 frame_id: gps
 uart1:
-  baudrate: 38400
-config_on_startup: false
+  baudrate: $(env F9P_BAUDRATE)
+  out: 3 # NMEA + UBX
+config_on_startup: true
+
+# Must set this param
+tmode3: 0
+
+rate: 20
+raw_data: true
+publish:
+  all: true
+  nmea: true
+
+# 默认已设置为所有支持的频段全开，开启星座即可
+gnss:
+  gps: true
+  glonass: true
+  beidou: true
+  qzss: true
+  galileo: true
